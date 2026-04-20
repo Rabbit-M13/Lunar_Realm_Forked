@@ -322,8 +322,38 @@ void ALREnemySpawner::PlaySpawnVFX(ACharacter* SpawnedCharacter)
 	);
 }
 
+void ALREnemySpawner::TestModeAction(bool InIsTest)
+{
+	if (!InIsTest)
+	{
+		return;
+	}
+	else
+	{
+		if (SpawnCount >= TestSpawnCountLimit)
+		{
+			DeactivateSpawner();
+			Destroy();
+		}
+		else
+		{
+			SpawnCount++;
+		}
+	}
+	
+}
+
 void ALREnemySpawner::SpawnEnemy()
 {
+	if (!bIsActivated)
+	{
+		return;
+	}
+
+	// TestAction
+	TestModeAction(IsTest);
+
+	// TestModeAction()에서 DeactivateSpawner()/Destroy()가 호출됐을 수 있으니 즉시 중단
 	if (!bIsActivated)
 	{
 		return;
