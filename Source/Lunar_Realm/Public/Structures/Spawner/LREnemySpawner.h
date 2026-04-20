@@ -89,7 +89,16 @@ protected:
 
 	void PlaySpawnVFX(ACharacter* SpawnedCharacter);
 
+	// IsTest = true 일때만 동작
+	void TestModeAction(bool InIsTest);
+
 protected:
+	UPROPERTY(EditAnywhere, Category = "LR|TEST")
+	bool IsTest;
+
+	UPROPERTY(EditAnywhere, Category = "LR|TEST")
+	int TestSpawnCountLimit = 8;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "LR|Spawner")
 	TSubclassOf<ALREnemyCharacter> EnemyClass;
 
@@ -98,7 +107,7 @@ protected:
 
 	// TEST: 사전 생성 오브젝트 풀 - 추후 개수 변경 필요 (50 ~ 100)
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "LR|Spawner")
-	int32 PrewarmCount = 32;
+	int32 PrewarmCount = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "LR|Spawner", meta = (ClampMin = "0.1"))
 	float WaitTime = 0.0f;
@@ -150,4 +159,7 @@ protected:
 private:
 	// 보스 스폰 시 탐지 거리 조정을 위한 오프셋
 	float DetectionRangeOffset = 100.f;
+
+	// 테스트 액션을 위한 스폰 횟수 카운트
+	int SpawnCount = 0;	
 };
